@@ -12,8 +12,8 @@ function PeoplePage() {
     setIsLoading(true);
 
     getPeople()
-      .then(people => {
-        setPeople(people);
+      .then(loadedPeople => {
+        setPeople(loadedPeople);
         setIsLoading(false);
       })
       .catch(() => {

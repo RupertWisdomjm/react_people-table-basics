@@ -1,6 +1,7 @@
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Person } from '../types/Person';
 import { Loader } from './Loader/Loader';
+import { PersonLink } from './PersonLink';
 
 interface PeopleTableProps {
   people: Person[];
@@ -44,7 +45,7 @@ export const PeopleTable = ({ people, isLoading, error }: PeopleTableProps) => {
 
             <tbody>
               {people.map(person => {
-                const { name, sex, born, died, fatherName, motherName, slug } =
+                const { sex, born, died, fatherName, motherName, slug } =
                   person;
 
                 const mother = people.find(p => p.name === motherName);
@@ -59,12 +60,7 @@ export const PeopleTable = ({ people, isLoading, error }: PeopleTableProps) => {
                     }
                   >
                     <td>
-                      <Link
-                        className={sex === 'f' ? 'has-text-danger' : ''}
-                        to={`/people/${slug}`}
-                      >
-                        {name}
-                      </Link>
+                      <PersonLink person={person} />
                     </td>
 
                     <td>{sex}</td>
@@ -73,12 +69,7 @@ export const PeopleTable = ({ people, isLoading, error }: PeopleTableProps) => {
 
                     <td>
                       {mother ? (
-                        <Link
-                          className="has-text-danger"
-                          to={`/people/${mother.slug}`}
-                        >
-                          {mother.name}
-                        </Link>
+                        <PersonLink person={mother} />
                       ) : (
                         motherName || '-'
                       )}
@@ -86,9 +77,7 @@ export const PeopleTable = ({ people, isLoading, error }: PeopleTableProps) => {
 
                     <td>
                       {father ? (
-                        <Link to={`/people/${father.slug}`}>
-                          {father.name}
-                        </Link>
+                        <PersonLink person={father} />
                       ) : (
                         fatherName || '-'
                       )}
